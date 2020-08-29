@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DeleteBtn from "../components/DeleteBtn";
+import SaveBtn from "../components/SaveBtn/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -10,6 +11,7 @@ import { Input, TextArea, FormBtn } from "../components/Form";
 function Books() {
   // Setting our component's initial state
   const [books, setBooks] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [formObject, setFormObject] = useState({});
 
   //Handle book search
@@ -25,12 +27,20 @@ function Books() {
     }
   }
 
+  function handleBookSave(obj) {
+    if (formObject.title) {
+      API.saveBook({
+        title: formObject.title,
+      })
+        .then((res) => loadBooks())
+        .catch((err) => console.log(err));
+    }
+  }
+
   //Render Search Results
   function renderSearch(obj) {
     console.log(obj);
-    for (let index = 0; index < obj.length; index++) {
-      console.log(obj[index].volumeInfo.title);
-    }
+    setSearchResults(obj);
   }
 
   // Load all books and store them with setBooks
@@ -42,7 +52,6 @@ function Books() {
   function loadBooks() {
     API.getBooks()
       .then((res) => {
-        console.log(res.data);
         setBooks(res.data);
       })
       .catch((err) => console.log(err));
@@ -100,38 +109,14 @@ function Books() {
           <Jumbotron>
             <h1>Search Results</h1>
           </Jumbotron>
-          {books.length ? (
+          {searchResults.length ? (
             <List>
-              {books.map((book) => (
-                <ListItem key={book._id}>
-                  <Link to={"/books/" + book._id}>
-                    <strong>
-                      {book.title} by {book.author}
-                    </strong>
-                  </Link>
-                  <DeleteBtn onClick={() => deleteBook(book._id)} />
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <h3>No Results to Display</h3>
-          )}
-        </Col>
-
-        <Col size="md-12 sm-12">
-          <Jumbotron>
-            <h1>Books On My List</h1>
-          </Jumbotron>
-          {books.length ? (
-            <List>
-              {books.map((book) => (
-                <ListItem key={book._id}>
-                  <Link to={"/books/" + book._id}>
-                    <strong>
-                      {book.title} by {book.author}
-                    </strong>
-                  </Link>
-                  <DeleteBtn onClick={() => deleteBook(book._id)} />
+              {searchResults.map((book) => (
+                <ListItem key={book.id}>
+                  <strong>{book.volumeInfo.title}</strong>
+                  <SaveBtn
+                    onClick={() => handleBookSave(book.volumeInfo.title)}
+                  />
                 </ListItem>
               ))}
             </List>
