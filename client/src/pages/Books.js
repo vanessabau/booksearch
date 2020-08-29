@@ -20,8 +20,18 @@ function Books() {
   // Loads all books and sets them to books
   function loadBooks() {
     API.getBooks()
-      .then((res) => setBooks(res.data))
+      .then((res) => {
+        console.log(res.data);
+        setBooks(res.data);
+      })
       .catch((err) => console.log(err));
+  }
+
+  function renderSearch(obj) {
+    console.log(obj);
+    for (let index = 0; index < obj.length; index++) {
+      console.log(obj[index].volumeInfo.title);
+    }
   }
 
   // Deletes a book from the database with a given id, then reloads books from the db
@@ -52,6 +62,19 @@ function Books() {
     }
   }
 
+  //Handle book search
+  function handleSearch(event) {
+    event.preventDefault();
+    console.log(formObject.title);
+    if (formObject.title) {
+      API.searchBook({
+        title: formObject.title,
+      })
+        .then((res) => renderSearch(res.data.items))
+        .catch((err) => console.log(err));
+    }
+  }
+
   return (
     <Container fluid>
       <Row>
@@ -66,13 +89,8 @@ function Books() {
               name="title"
               placeholder="Title (required)"
             />
-            <Input
-              onChange={handleInputChange}
-              name="author"
-              placeholder="Author"
-            />
 
-            <FormBtn disabled={!formObject.title} onClick={handleFormSubmit}>
+            <FormBtn disabled={!formObject.title} onClick={handleSearch}>
               Submit Book
             </FormBtn>
           </form>
