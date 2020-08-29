@@ -12,6 +12,27 @@ function Books() {
   const [books, setBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
 
+  //Handle book search
+  function handleSearch(event) {
+    event.preventDefault();
+    console.log(formObject.title);
+    if (formObject.title) {
+      API.searchBook({
+        title: formObject.title,
+      })
+        .then((res) => renderSearch(res.data.items))
+        .catch((err) => console.log(err));
+    }
+  }
+
+  //Render Search Results
+  function renderSearch(obj) {
+    console.log(obj);
+    for (let index = 0; index < obj.length; index++) {
+      console.log(obj[index].volumeInfo.title);
+    }
+  }
+
   // Load all books and store them with setBooks
   useEffect(() => {
     loadBooks();
@@ -25,13 +46,6 @@ function Books() {
         setBooks(res.data);
       })
       .catch((err) => console.log(err));
-  }
-
-  function renderSearch(obj) {
-    console.log(obj);
-    for (let index = 0; index < obj.length; index++) {
-      console.log(obj[index].volumeInfo.title);
-    }
   }
 
   // Deletes a book from the database with a given id, then reloads books from the db
@@ -62,19 +76,6 @@ function Books() {
     }
   }
 
-  //Handle book search
-  function handleSearch(event) {
-    event.preventDefault();
-    console.log(formObject.title);
-    if (formObject.title) {
-      API.searchBook({
-        title: formObject.title,
-      })
-        .then((res) => renderSearch(res.data.items))
-        .catch((err) => console.log(err));
-    }
-  }
-
   return (
     <Container fluid>
       <Row>
@@ -89,12 +90,34 @@ function Books() {
               name="title"
               placeholder="Title (required)"
             />
-
             <FormBtn disabled={!formObject.title} onClick={handleSearch}>
               Submit Book
             </FormBtn>
           </form>
         </Col>
+
+        <Col size="md-12 sm-12">
+          <Jumbotron>
+            <h1>Search Results</h1>
+          </Jumbotron>
+          {books.length ? (
+            <List>
+              {books.map((book) => (
+                <ListItem key={book._id}>
+                  <Link to={"/books/" + book._id}>
+                    <strong>
+                      {book.title} by {book.author}
+                    </strong>
+                  </Link>
+                  <DeleteBtn onClick={() => deleteBook(book._id)} />
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            <h3>No Results to Display</h3>
+          )}
+        </Col>
+
         <Col size="md-12 sm-12">
           <Jumbotron>
             <h1>Books On My List</h1>
