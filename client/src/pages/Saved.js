@@ -57,17 +57,15 @@ function Saved() {
       <Row>
         <Col size="md-12 sm-12">
           <Jumbotron>
-            <h1>React Book Search</h1>
-            <h4>Search and Save Books of Interest</h4>
+            <h1>Saved Books</h1>
+            <h4>Saved Books of Interest</h4>
           </Jumbotron>
           {books.length ? (
             <List>
               {books.map((book) => (
                 <ListItem key={book._id}>
                   <Link to={"/books/" + book._id}>
-                    <strong>
-                      {book.title} by {book.author}
-                    </strong>
+                    <strong>{book.title}</strong>
                   </Link>
                   <DeleteBtn onClick={() => deleteBook(book._id)} />
                 </ListItem>

@@ -28,9 +28,9 @@ function Books() {
   }
 
   function handleBookSave(obj) {
-    if (formObject.title) {
+    if (obj) {
       API.saveBook({
-        title: formObject.title,
+        title: obj,
       })
         .then((res) => loadBooks())
         .catch((err) => console.log(err));
