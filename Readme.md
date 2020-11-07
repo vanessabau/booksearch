@@ -1,6 +1,6 @@
 # README Google Book Search MERN Application
 
-Automated template that produces an organized and formatted readme.md file
+Full stack application using google books API to search book titles, select titles and save a list of selected titles.
 
 # ![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg)
 
@@ -8,7 +8,11 @@ Automated template that produces an organized and formatted readme.md file
 
 ## GITHUB EMAIL: vbautista916@icloud.com
 
+<<<<<<< HEAD
 # ![booksearch](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
+=======
+# ![bookseach](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
+>>>>>>> c7c38c93362dfba970bbdebb4e73096b303c93d8
 
 ## TABLE OF CONTENTS
 
