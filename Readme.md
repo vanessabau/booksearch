@@ -23,7 +23,7 @@ Automated template that produces an organized and formatted readme.md file
 
 ### Installation
 
-To use visit the deployed url https://aqueous-waters-15807.herokuapp.com/ and type in a book title. Press search and books can be saved to a list on a separate page. Books can be deleted from the saved page.
+To use visit the deployed url https://bk-search-react.herokuapp.com/saved and type in a book title. Press search and books can be saved to a list on a separate page. Books can be deleted from the saved page.
 
 ### Useage
 
