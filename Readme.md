@@ -1,6 +1,6 @@
 # README Google Book Search MERN Application
 
-Full stack application using google books API to search book titles, select titles and save a list of selected titles.
+Full stack MERN application using google books API to search book titles, select titles and save a list of selected titles.
 
 # ![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg)
 
@@ -18,7 +18,7 @@ Full stack application using google books API to search book titles, select titl
 
 1. [Installation](###Installation)
 2. [Useage](###Useage)
-3. [Licensing](###Licensing)
+3. [Technologies](###Licensing)
 4. [Contributors](###Contributors)
 5. [Tests](###Testing)
 6. [Questions](###Questions)
@@ -33,9 +33,9 @@ To use visit the deployed url https://bk-search-react.herokuapp.com/saved and ty
 
 This is a fulls stack application that can be downloaded from the github repo and deployed locally by running "npm install".
 
-### Licensing
+### Technologies Used
 
-None
+VS Code, ES6, React, React Router, Node.js, Express, Axios, MongDB, Atlas, Heroku, Git
 
 ### Contributors
 
