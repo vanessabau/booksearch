@@ -8,11 +8,8 @@ Full stack MERN application using google books API to search book titles, select
 
 ## GITHUB EMAIL: vbautista916@icloud.com
 
-<<<<<<< HEAD
-# ![booksearch](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
-=======
 # ![bookseach](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
->>>>>>> c7c38c93362dfba970bbdebb4e73096b303c93d8
+
 
 ## TABLE OF CONTENTS
 
