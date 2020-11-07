@@ -6,7 +6,7 @@ Full stack MERN application using google books API to search book titles, select
 
 ## GITHUB USER: vanessabau
 
-## GITHUB EMAIL: vbautista916@icloud.com
+## DEVELOPER EMAIL: vanessawebdev@gmail.com
 
 # ![bookseach](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
 
