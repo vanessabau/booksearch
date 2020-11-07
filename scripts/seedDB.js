@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const db = require("../models");
 
 // This file empties the Books collection and inserts the books below
-
+//MONGODB_URI
 mongoose.connect(
-  process.env.MONGODB_URI ||
+  process.env.DB_URI ||
   "mongodb://localhost/reactreadinglist"
 );
 
