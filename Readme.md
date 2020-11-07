@@ -8,7 +8,7 @@ Automated template that produces an organized and formatted readme.md file
 
 ## GITHUB EMAIL: vbautista916@icloud.com
 
-# ![vanessabau](https://avatars2.githubusercontent.com/u/59780981?v=4)
+# ![booksearch](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
 
 ## TABLE OF CONTENTS
 
