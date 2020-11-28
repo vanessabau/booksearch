@@ -32,7 +32,7 @@ This is a fulls stack application that can be downloaded from the github repo an
 
 ### Technologies Used
 
-VS Code, ES6, React, React Router, Node.js, Express, Axios, MongDB, Atlas, Heroku, Git
+VS Code, ES6, React, React Router, Node.js, Express, Axios, MongoDB, Atlas, Heroku, Git
 
 ### Contributors
 
