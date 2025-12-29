@@ -8,8 +8,6 @@ Full stack MERN application using google books API to search book titles, select
 
 ## DEVELOPER EMAIL: vanessawebdev@gmail.com
 
-# 
-
 
 ## TABLE OF CONTENTS
 
