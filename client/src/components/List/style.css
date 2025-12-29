@@ -1,6 +1,483 @@
+/* =========================================================
+   React Reading List — style.css
+   - Clean structure
+   - No !important
+   - Fixes input click area + placeholder clipping
+   - Restores book result cards layout
+========================================================= */
+
+/* =========================================================
+   1) Design Tokens
+========================================================= */
+:root {
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+
+  --text: #111827;
+  --muted: #6b7280;
+
+  --brand: #0b5ed7;
+
+  --border: rgba(17, 24, 39, 0.08);
+  --border-strong: rgba(17, 24, 39, 0.12);
+
+  --shadow-soft: 0 10px 22px rgba(0, 0, 0, 0.06);
+  --shadow-strong: 0 18px 40px rgba(0, 0, 0, 0.08);
+
+  --radius-lg: 22px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+
+  --content-max: 1000px;
+}
+
+/* =========================================================
+   2) Base + Typography
+========================================================= */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   3) Topbar (Nav)
+========================================================= */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.brand:hover {
+  opacity: 0.9;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.nav-item:hover {
+  background: rgba(17, 24, 39, 0.06);
+  color: var(--text);
+}
+
+.nav-item.is-active {
+  background: rgba(11, 94, 215, 0.12);
+  color: var(--brand);
+}
+
+/* =========================================================
+   4) Page Shell
+========================================================= */
+.books-page {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   5) Hero
+========================================================= */
+/* SEARCH PAGE HERO (now the more dynamic gradient) */
+.hero {
+  max-width: var(--content-max);
+  margin: 24px auto 0;
+  padding: 56px 31px 42px; /* +15px horizontal padding */
+
+  border-radius: 22px;
+  color: #ffffff;
+
+  background: radial-gradient(
+      900px 420px at 20% 15%,
+      rgba(34, 197, 94, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 360px at 85% 25%,
+      rgba(59, 130, 246, 0.25),
+      transparent 55%
+    ),
+    radial-gradient(
+      800px 420px at 55% 95%,
+      rgba(16, 185, 129, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #071a14 0%, #0f766e 45%, #2563eb 100%);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 28px 60px rgba(2, 6, 23, 0.35);
+}
+
+.hero-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hero-title {
+  margin-top: 6px;
+  font-size: 44px;
+  line-height: 1.05;
+  font-weight: 900;
+  color: #fff;
+}
+
+.hero-subtitle {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 560px;
+}
+
+/* =========================================================
+   6) Search Card + Form Layout
+========================================================= */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.search-card {
+  margin-top: 22px;
+  padding: 18px;
+
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 22px 50px rgba(2, 6, 23, 0.3);
+}
+
+.search-form {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =========================================================
+   7) Search Pill (FIXED)
+   - Input fills the whole pill (click anywhere)
+   - Placeholder never clips (line-height matches height)
+   - Input itself is borderless/transparent (no inner gray line)
+========================================================= */
+.search-pill {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  height: 56px;
+  padding: 0 18px;
+
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+}
+
+.search-pill:focus-within {
+  border-color: rgba(11, 94, 215, 0.55);
+  box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.14);
+}
+
+/* Works whether Input renders with .form-control or not */
+.search-pill > input,
+.search-pill > input.form-control {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+
+  height: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 56px;
+  color: #111827;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.search-pill > input::placeholder,
+.search-pill > input.form-control::placeholder {
+  color: rgba(107, 114, 128, 0.9);
+}
+
+/* If Bootstrap applies focus styles on the input itself, neutralize */
+.search-pill > input:focus,
+.search-pill > input.form-control:focus {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+/* =========================================================
+   8) Button polish (FormBtn / bootstrap .btn)
+========================================================= */
+.search-action button,
+.search-action .btn {
+  height: 56px;
+  min-width: 120px; /* makes input feel wider */
+  border-radius: 16px;
+  padding: 0 18px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   9) Results Section + Cards
+========================================================= */
+.results-header {
+  max-width: var(--content-max);
+  margin: 26px auto 10px;
+  padding: 0 16px;
+}
+
+.results-header h3 {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.results-header .muted {
+  margin-top: 6px;
+}
+
+.results-grid {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 16px 40px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.book-card {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.07);
+}
+
+.book-left {
+  width: 92px;
+}
+
+.thumb {
+  width: 92px;
+  height: 132px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eef2f7;
+  border: 1px solid rgba(17, 24, 39, 0.1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-fallback {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.book-main {
+  min-width: 0;
+}
+
+.book-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.book-meta {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.book-desc {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.45;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-actions {
+  margin-top: 12px;
+}
+
+/* =========================================================
+   Save Button — Books Page
+========================================================= */
+.book-actions .btn {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+.book-actions .btn:hover {
+  background: #0a58ca;
+  border-color: #0a58ca;
+  box-shadow: 0 6px 14px rgba(11, 94, 215, 0.25);
+}
+
+.book-actions .btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   Delete Button — Saved Page
+========================================================= */
+.saved-page .btn,
+.saved-page .btn-danger {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.saved-page .btn:hover,
+.saved-page .btn-danger:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.empty-state h3 {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.empty-state .muted {
+  margin-top: 10px;
+}
+
+/* =========================================================
+   10) Accessibility
+========================================================= */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* =========================================================
+   11) Legacy List (keep only if still used elsewhere)
+========================================================= */
 .list-overflow-container {
   max-height: 545px;
-  border: 1px #DDDDDD solid;
+  border: 1px #dddddd solid;
   border-radius: 4px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -21,7 +498,7 @@
 }
 
 .list-overflow-container li a {
-  color: #2A878C;
+  color: #2a878c;
 }
 
 .list-overflow-container li:first-child {
@@ -30,4 +507,83 @@
 
 .list-overflow-container li:last-child {
   border-bottom: none;
+}
+
+/* SAVED BOOKS LIST */
+/* Saved page: alternate hero theme (cohesive, but different) */
+.hero.hero--saved {
+  background: radial-gradient(
+      900px 420px at 20% 15%,
+      rgba(99, 102, 241, 0.55),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 360px at 85% 25%,
+      rgba(34, 197, 94, 0.25),
+      transparent 55%
+    ),
+    radial-gradient(
+      800px 420px at 55% 95%,
+      rgba(11, 94, 215, 0.55),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #0b1220 0%, #0b5ed7 45%, #2563eb 100%);
+}
+
+/* Saved summary card */
+.saved-summary {
+  margin-top: 22px;
+}
+
+.saved-summary-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.saved-summary-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.65);
+}
+
+.saved-summary-count {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #111827;
+}
+
+.saved-summary-hint {
+  font-size: 14px;
+  color: rgba(17, 24, 39, 0.6);
+}
+
+/* =========================================================
+   12) Responsive
+========================================================= */
+@media (min-width: 900px) {
+  .hero-title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 42px 18px 34px;
+  }
+
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-action button,
+  .search-action .btn {
+    width: 100%;
+    min-width: 0;
+  }
 }

@@ -1,19 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-      <Link className="navbar-brand" to="/">
-        React Reading List
-      </Link>
-      <Link className="navbar-brand" to="/">
-        search
-      </Link>
-      <Link className="navbar-brand" to="/saved">
-        saved
-      </Link>
-    </nav>
+    <header className="topbar">
+      <div className="topbar-inner">
+        <NavLink to="/" className="brand">
+          React Reading List
+        </NavLink>
+
+        <nav className="nav-links" aria-label="Primary">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              "nav-item" + (isActive ? " is-active" : "")
+            }
+          >
+            Search
+          </NavLink>
+
+          <NavLink
+            to="/saved"
+            className={({ isActive }) =>
+              "nav-item" + (isActive ? " is-active" : "")
+            }
+          >
+            Saved
+          </NavLink>
+        </nav>
+      </div>
+    </header>
   );
 }
 
