@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
+import React, { useState } from "react";
 import SaveBtn from "../components/SaveBtn/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
-function Books() {
+function Books({ savedBooks, saveBook }) {
   // Setting our component's initial state
-  const [books, setBooks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [formObject, setFormObject] = useState({});
 
@@ -27,13 +24,9 @@ function Books() {
     }
   }
 
-  function handleBookSave(obj) {
-    if (obj) {
-      API.saveBook({
-        title: obj,
-      })
-        .then((res) => loadBooks())
-        .catch((err) => console.log(err));
+  function handleBookSave(book) {
+    if (book) {
+      saveBook(book);
     }
   }
 
@@ -43,46 +36,10 @@ function Books() {
     setSearchResults(obj);
   }
 
-  // Load all books and store them with setBooks
-  useEffect(() => {
-    loadBooks();
-  }, []);
-
-  // Loads all books and sets them to books
-  function loadBooks() {
-    API.getBooks()
-      .then((res) => {
-        setBooks(res.data);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  // Deletes a book from the database with a given id, then reloads books from the db
-  function deleteBook(id) {
-    API.deleteBook(id)
-      .then((res) => loadBooks())
-      .catch((err) => console.log(err));
-  }
-
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     const { name, value } = event.target;
     setFormObject({ ...formObject, [name]: value });
-  }
-
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (formObject.title && formObject.author) {
-      API.saveBook({
-        title: formObject.title,
-        author: formObject.author,
-        synopsis: formObject.synopsis,
-      })
-        .then((res) => loadBooks())
-        .catch((err) => console.log(err));
-    }
   }
 
   return (
@@ -113,10 +70,12 @@ function Books() {
             <List>
               {searchResults.map((book) => (
                 <ListItem key={book.id}>
-                  <strong>{book.volumeInfo.title}</strong>
-                  <SaveBtn
-                    onClick={() => handleBookSave(book.volumeInfo.title)}
-                  />
+                  <strong>
+                    {book.volumeInfo.title}
+                    {book.volumeInfo.authors &&
+                      " by " + book.volumeInfo.authors.join(", ")}
+                  </strong>
+                  <SaveBtn onClick={() => handleBookSave(book)} />
                 </ListItem>
               ))}
             </List>
