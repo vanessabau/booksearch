@@ -10,7 +10,6 @@ Full stack MERN application using google books API to search book titles, select
 
 # ![bookseach](https://raw.githubusercontent.com/vanessabau/booksearch/booksearch/booksearch%20-%201.png)
 
-
 ## TABLE OF CONTENTS
 
 1. [Installation](###Installation)
@@ -24,7 +23,7 @@ Full stack MERN application using google books API to search book titles, select
 
 ### Installation
 
-To use visit the deployed url https://bk-search-react.herokuapp.com/saved and type in a book title. Press search and books can be saved to a list on a separate page. Books can be deleted from the saved page.
+To use visit the deployed url https://google-booksearch.vercel.app/ and type in a book title. Press search and books can be saved to a list on a separate page. Books can be deleted from the saved page.
 
 ### Useage
 
